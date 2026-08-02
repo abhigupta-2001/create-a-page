@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NexusAuth - Modern Secure Portal</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Main Stylesheet -->
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Dynamic Ambient Background Mesh -->
+    <div class="ambient-bg">
+        <div class="orb orb-1"></div>
+        <div class="orb orb-2"></div>
+        <div class="orb orb-3"></div>
+        <div class="grid-overlay"></div>
+    </div>
+
+    <!-- Toast Notification System -->
+    <div id="toastContainer" class="toast-container" aria-live="polite"></div>
+
+    <main class="main-wrapper">
+        <!-- AUTH CONTAINER -->
+        <div id="authCard" class="auth-card glass-panel">
+            <!-- Brand Logo -->
+            <div class="brand-header">
+                <div class="logo-icon">
+                    <i class="fa-solid fa-shield-halved"></i>
+                </div>
+                <h1 class="brand-title">Nexus<span>Auth</span></h1>
+                <p class="brand-subtitle" id="formSubtitle">Welcome back! Please enter your details.</p>
+            </div>
+
+            <!-- Tab Controls -->
+            <div class="auth-tabs" role="tablist">
+                <button type="button" class="tab-btn active" id="tabSignIn" role="tab" aria-selected="true">Sign In</button>
+                <button type="button" class="tab-btn" id="tabSignUp" role="tab" aria-selected="false">Sign Up</button>
+            </div>
+
+            <!-- SIGN IN FORM -->
+            <form id="signInForm" class="auth-form active" novalidate>
+                <div class="input-group">
+                    <label for="loginEmail">Email Address</label>
+                    <div class="input-wrapper">
+                        <i class="fa-regular fa-envelope input-icon"></i>
+                        <input type="email" id="loginEmail" placeholder="name@company.com" required autocomplete="email">
+                    </div>
+                    <span class="error-msg" id="loginEmailError"></span>
+                </div>
+
+                <div class="input-group">
+                    <div class="label-row">
+                        <label for="loginPassword">Password</label>
+                        <button type="button" class="btn-link" id="btnForgotPassword">Forgot password?</button>
+                    </div>
+                    <div class="input-wrapper">
+                        <i class="fa-solid fa-lock input-icon"></i>
+                        <input type="password" id="loginPassword" placeholder="••••••••" required autocomplete="current-password">
+                        <button type="button" class="toggle-password" aria-label="Toggle password visibility" data-target="loginPassword">
+                            <i class="fa-regular fa-eye"></i>
+                        </button>
+                    </div>
+                    <span class="error-msg" id="loginPasswordError"></span>
+                </div>
+
+                <div class="form-actions">
+                    <label class="checkbox-container">
+                        <input type="checkbox" id="rememberMe">
+                        <span class="checkmark"></span>
+                        <span class="checkbox-label">Remember me for 30 days</span>
+                    </label>
+                </div>
+
+                <button type="submit" class="btn-primary" id="signInSubmitBtn">
+                    <span class="btn-text">Sign In</span>
+                    <i class="fa-solid fa-arrow-right btn-icon"></i>
+                    <div class="spinner"></div>
+                </button>
+
+                <div class="divider">
+                    <span>Or continue with</span>
+                </div>
+
+                <div class="social-auth">
+                    <button type="button" class="btn-social" data-provider="Google">
+                        <i class="fa-brands fa-google"></i>
+                        <span>Google</span>
+                    </button>
+                    <button type="button" class="btn-social" data-provider="GitHub">
+                        <i class="fa-brands fa-github"></i>
+                        <span>GitHub</span>
+                    </button>
+                    <button type="button" class="btn-social" data-provider="Apple">
+                        <i class="fa-brands fa-apple"></i>
+                        <span>Apple</span>
+                    </button>
+                </div>
+            </form>
+
+            <!-- SIGN UP FORM -->
+            <form id="signUpForm" class="auth-form" novalidate>
+                <div class="input-group">
+                    <label for="regName">Full Name</label>
+                    <div class="input-wrapper">
+                        <i class="fa-regular fa-user input-icon"></i>
+                        <input type="text" id="regName" placeholder="Alex Morgan" required autocomplete="name">
+                    </div>
+                    <span class="error-msg" id="regNameError"></span>
+                </div>
+
+                <div class="input-group">
+                    <label for="regEmail">Email Address</label>
+                    <div class="input-wrapper">
+                        <i class="fa-regular fa-envelope input-icon"></i>
+                        <input type="email" id="regEmail" placeholder="name@company.com" required autocomplete="email">
+                    </div>
+                    <span class="error-msg" id="regEmailError"></span>
+                </div>
+
+                <div class="input-group">
+                    <label for="regPassword">Password</label>
+                    <div class="input-wrapper">
+                        <i class="fa-solid fa-lock input-icon"></i>
+                        <input type="password" id="regPassword" placeholder="Create a strong password" required autocomplete="new-password">
+                        <button type="button" class="toggle-password" aria-label="Toggle password visibility" data-target="regPassword">
+                            <i class="fa-regular fa-eye"></i>
+                        </button>
+                    </div>
+                    <!-- Password Strength Meter -->
+                    <div class="strength-meter">
+                        <div class="strength-bar-track">
+                            <div class="strength-bar-fill" id="strengthBar"></div>
+                        </div>
+                        <span class="strength-text" id="strengthText">Password Strength</span>
+                    </div>
+                    <ul class="password-rules">
+                        <li id="ruleLength"><i class="fa-solid fa-circle-check"></i> At least 8 characters</li>
+                        <li id="ruleUpper"><i class="fa-solid fa-circle-check"></i> Contains uppercase letter</li>
+                        <li id="ruleNumber"><i class="fa-solid fa-circle-check"></i> Contains number</li>
+                        <li id="ruleSpecial"><i class="fa-solid fa-circle-check"></i> Contains special character (!@#$)</li>
+                    </ul>
+                    <span class="error-msg" id="regPasswordError"></span>
+                </div>
+
+                <div class="input-group">
+                    <label for="regConfirmPassword">Confirm Password</label>
+                    <div class="input-wrapper">
+                        <i class="fa-solid fa-shield-cat input-icon"></i>
+                        <input type="password" id="regConfirmPassword" placeholder="Re-enter password" required autocomplete="new-password">
+                    </div>
+                    <span class="error-msg" id="regConfirmPasswordError"></span>
+                </div>
+
+                <div class="form-actions">
+                    <label class="checkbox-container">
+                        <input type="checkbox" id="acceptTerms" required>
+                        <span class="checkmark"></span>
+                        <span class="checkbox-label">I agree to the <a href="#" class="btn-link">Terms of Service</a> & <a href="#" class="btn-link">Privacy Policy</a></span>
+                    </label>
+                    <span class="error-msg" id="termsError"></span>
+                </div>
+
+                <button type="submit" class="btn-primary" id="signUpSubmitBtn">
+                    <span class="btn-text">Create Account</span>
+                    <i class="fa-solid fa-user-plus btn-icon"></i>
+                    <div class="spinner"></div>
+                </button>
+            </form>
+
+            <!-- FORGOT PASSWORD FORM -->
+            <form id="forgotPasswordForm" class="auth-form" novalidate>
+                <p class="forgot-desc">Enter your email address below and we'll send you a link to reset your password.</p>
+
+                <div class="input-group">
+                    <label for="resetEmail">Email Address</label>
+                    <div class="input-wrapper">
+                        <i class="fa-regular fa-envelope input-icon"></i>
+                        <input type="email" id="resetEmail" placeholder="name@company.com" required autocomplete="email">
+                    </div>
+                    <span class="error-msg" id="resetEmailError"></span>
+                </div>
+
+                <button type="submit" class="btn-primary" id="resetSubmitBtn">
+                    <span class="btn-text">Send Reset Link</span>
+                    <i class="fa-solid fa-paper-plane btn-icon"></i>
+                    <div class="spinner"></div>
+                </button>
+
+                <div class="back-to-login">
+                    <button type="button" class="btn-link" id="btnBackToLogin">
+                        <i class="fa-solid fa-arrow-left"></i> Back to Sign In
+                    </button>
+                </div>
+            </form>
+        </div>
+
+        <!-- DASHBOARD CONTAINER (SHOWN AFTER SUCCESSFUL LOGIN) -->
+        <div id="dashboardCard" class="dashboard-card glass-panel hidden">
+            <div class="dash-header">
+                <div class="user-avatar" id="dashAvatar">AM</div>
+                <div class="dash-user-info">
+                    <span class="welcome-badge"><i class="fa-solid fa-circle"></i> Authenticated</span>
+                    <h2 id="dashUserName">Welcome back, Alex!</h2>
+                    <p id="dashUserEmail">alex.morgan@example.com</p>
+                </div>
+            </div>
+
+            <div class="dash-stats">
+                <div class="stat-card">
+                    <div class="stat-icon"><i class="fa-solid fa-shield-virus"></i></div>
+                    <div class="stat-info">
+                        <span class="stat-label">Security Health</span>
+                        <span class="stat-value text-success">Excellent (98%)</span>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon"><i class="fa-solid fa-laptop-code"></i></div>
+                    <div class="stat-info">
+                        <span class="stat-label">Active Session</span>
+                        <span class="stat-value">Chrome on Windows</span>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon"><i class="fa-regular fa-clock"></i></div>
+                    <div class="stat-info">
+                        <span class="stat-label">Last Activity</span>
+                        <span class="stat-value" id="dashLastLogin">Just Now</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="dash-actions">
+                <button type="button" class="btn-secondary" id="dashNotificationBtn">
+                    <i class="fa-regular fa-bell"></i> Send Demo Alert
+                </button>
+                <button type="button" class="btn-primary btn-logout" id="btnLogout">
+                    <i class="fa-solid fa-right-from-bracket"></i> Sign Out
+                </button>
+            </div>
+        </div>
+    </main>
+
+    <!-- Script File -->
+    <script src="script.js"></script>
+</body>
+</html>
